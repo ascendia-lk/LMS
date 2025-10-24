@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ascendia LMS — Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#4b4cf8;        /* deep purple/indigo like your mock */
+      --ink:#0b1225;
+      --muted:#7a8194;
+      --panel:#ffffff;
+      --shadow:0 20px 60px rgba(11,18,37,.18);
+    }
+    /* Full scene background image */
+    body {
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(255,255,255,.0), rgba(255,255,255,.15)) ,
+        url("assets/login-bg.jpg") center/cover no-repeat fixed;
+    }
+
+    /* Layout */
+    .auth-wrapper{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:32px 18px;
+    }
+    .auth-card{
+      width:min(980px, 100%);
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      border-radius:22px;
+      overflow:hidden;
+    }
+    /* Left illustration block (you can keep your own person art here if you want) */
+    .art{
+      background: transparent;
+      display:flex; align-items:flex-end; justify-content:center;
+      min-height:520px;
+      padding:28px;
+    }
+    .art .device{
+      width:92%; max-width:440px;
+    }
+
+    /* Right form block */
+    .form-side{ padding:40px 36px; }
+    @media (min-width:992px){ .form-side{ padding:56px 48px; } }
+
+    .welcome h2{ font-weight:800; color:#2c3070; }
+    .welcome p{ color:var(--muted); }
+
+    /* Pretty inputs with icons */
+    .input-pill{
+      position:relative;
+    }
+    .input-pill .bi{
+      position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      color:#9aa3b2;
+    }
+    .input-pill input{
+      padding-left:42px;
+      height:48px; border-radius:999px;
+    }
+    /* show/hide */
+    .input-pill .toggle{
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      cursor:pointer; color:#9aa3b2;
+    }
+
+    /* Button */
+    .btn-brand{
+      background:linear-gradient(90deg, var(--brand), #7a79ff);
+      border:0; color:#fff; font-weight:700; height:48px; border-radius:999px;
+    }
+
+    .tiny-link{ color:var(--muted); }
+    .tiny-link a{ color:#4a4cff; text-decoration:underline; }
+
+    /* Glassy form container (to mimic the card in your ref) */
+    .form-glass{
+      border:1px solid rgba(76, 76, 255, .08);
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(11,18,37,.08) inset;
+      background:#fff;
+    }
+
+    /* optional logo chip */
+    .brand-chip{
+      display:inline-flex; align-items:center; gap:.5rem;
+      font-weight:700; color:#2c3070;
+    }
+    .brand-dot{ width:10px; height:10px; border-radius:999px; background:var(--brand); box-shadow:0 0 0 6px rgba(75,76,248,.12); display:inline-block; }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="row g-0">
+        <!-- Illustration / left side -->
+        <div class="col-lg-6 d-none d-lg-flex art">
+          <!-- Use any SVG/PNG illustration here if you like, or leave empty to just show the scene bg -->
+          <img class="device" src="assets/critical-thinkin-02_vector.webp" alt="" onerror="this.style.display='none'">
+        </div>
+
+        <!-- Form / right side -->
+        <div class="col-lg-6 bg-white">
+          <div class="form-side">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="brand-chip"><span class="brand-dot"></span>Ascendia LMS</div>
+              <a class="btn btn-outline-dark btn-sm rounded-pill" href="#" onclick="event.preventDefault(); alert('Mock docs');">Documentation</a>
+            </div>
+
+            <div class="welcome mb-3">
+              <h2 class="mb-1">Welcome</h2>
+              <p class="mb-0">A community of our hundreds of members to share arts and ideas.</p>
+            </div>
+
+            <div class="form-glass">
+              <form id="loginForm" novalidate>
+                <div class="mb-3 input-pill">
+                  <i class="bi bi-person"></i>
+                  <input id="email" type="email" class="form-control" placeholder="Username/email" required>
+                  <div class="invalid-feedback">Enter a valid email.</div>
+                </div>
+
+                <div class="mb-2 input-pill">
+                  <i class="bi bi-lock"></i>
+                  <input id="password" type="password" class="form-control" placeholder="Password" minlength="4" required>
+                  <i class="bi bi-eye toggle" id="togglePwd" title="Show/Hide" onclick="togglePassword()"></i>
+                  <div class="invalid-feedback">Password must be at least 4 characters.</div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label tiny-link" for="rememberMe">Remember me</label>
+                  </div>
+                  <a href="#" class="tiny-link" onclick="event.preventDefault(); alert('Forgot password — mock');">Forgot password</a>
+                </div>
+
+                <div id="loginError" class="alert alert-danger py-2 d-none"></div>
+
+                <button id="loginBtn" class="btn btn-brand w-100" type="submit">Login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div> <!-- row -->
+    </div> <!-- auth-card -->
+  </div> <!-- wrapper -->
+
+  <!-- Toast -->
+  <div class="toast position-fixed bottom-0 end-0 m-3" id="loginToast">
+    <div class="toast-header"><strong class="me-auto">Ascendia</strong><small>now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body" id="toastMsg">Signed in</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Eye toggle
+    function togglePassword(){
+      const input = document.getElementById('password');
+      const ic = document.getElementById('togglePwd');
+      input.type = input.type === 'password' ? 'text' : 'password';
+      ic.className = 'bi ' + (input.type === 'password' ? 'bi-eye' : 'bi-eye-slash') + ' toggle';
+    }
+
+    // Toast helper
+    function toast(msg){
+      const t = document.getElementById('loginToast'); const m = document.getElementById('toastMsg');
+      if(m) m.textContent = msg;
+      if(t) new bootstrap.Toast(t).show();
+    }
+
+    // Simple mock auth that integrates with your existing guard()
+    (function attachForm(){
+      const form = document.getElementById('loginForm');
+      const email = document.getElementById('email');
+      const pwd = document.getElementById('password');
+      const err = document.getElementById('loginError');
+      const btn = document.getElementById('loginBtn');
+
+      // restore remembered email
+      const remembered = localStorage.getItem('asc_login_email') || '';
+      if(remembered) email.value = remembered;
+
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        err.classList.add('d-none');
+        if(!form.checkValidity()){
+          form.classList.add('was-validated');
+          return;
+        }
+        if(document.getElementById('rememberMe').checked){
+          localStorage.setItem('asc_login_email', email.value.trim());
+        } else {
+          localStorage.removeItem('asc_login_email');
+        }
+
+        btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in…';
+        setTimeout(()=>{
+          if((pwd.value || '').length < 4){
+            err.textContent = 'Password too short.'; err.classList.remove('d-none');
+            btn.disabled = false; btn.innerHTML = 'Login'; return;
+          }
+          localStorage.setItem('asc_auth', JSON.stringify({ email: email.value.trim(), ts: Date.now() }));
+          toast('Signed in');
+          window.location.href = 'dashboard.html';
+        }, 600);
+      });
+    })();
+
+    // If your app.js already offers initLogin(), keep calling it.
+    window.addEventListener('DOMContentLoaded', ()=>{ if(typeof initLogin==='function') initLogin(); });
+  </script>
+</body>
+</html>
